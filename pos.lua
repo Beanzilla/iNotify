@@ -34,7 +34,9 @@ function inotify.render_pos(player, posi, off, align, scaler)
             number        = inotify.colors.white,
         })
     else
-        player:hud_change(inotify.player_pos_hud[pname], "text", ""..pos.."")
+        if dirty then
+            player:hud_change(inotify.player_pos_hud[pname], "text", ""..pos.."")
+        end
     end
 end
 

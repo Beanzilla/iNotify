@@ -45,20 +45,22 @@ function inotify.render_health(player, pos, off, align, scaler)
             number        = color,
         })
     else
-        player:hud_change(inotify.health_hud[pname], "text", "HP: "..string.format("%.0f", hp_perc).."%")
-        local color = inotify.colors.white
-        if hp_perc <= 25 then
-            color = inotify.colors.red
-        elseif hp_perc <= 50 and hp_perc > 25 then
-            color = inotify.colors.orange
-        elseif hp_perc <= 75 and hp_perc > 50 then
-            color = inotify.colors.yellow
-        elseif hp_perc <= 95 and hp_perc > 75 then
-            color = inotify.colors.dark_green
-        elseif hp_perc > 95 then
-            color = inotify.colors.green
+        if dirty then
+            player:hud_change(inotify.health_hud[pname], "text", "HP: "..string.format("%.0f", hp_perc).."%")
+            local color = inotify.colors.white
+            if hp_perc <= 25 then
+                color = inotify.colors.red
+            elseif hp_perc <= 50 and hp_perc > 25 then
+                color = inotify.colors.orange
+            elseif hp_perc <= 75 and hp_perc > 50 then
+                color = inotify.colors.yellow
+            elseif hp_perc <= 95 and hp_perc > 75 then
+                color = inotify.colors.dark_green
+            elseif hp_perc > 95 then
+                color = inotify.colors.green
+            end
+            player:hud_change(inotify.health_hud[pname], "number", color)
         end
-        player:hud_change(inotify.health_hud[pname], "number", color)
     end
 end
 

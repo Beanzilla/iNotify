@@ -51,20 +51,22 @@ function inotify.render_inv(player, pos, off, align, scaler)
             number        = color,
         })
     else
-        player:hud_change(inotify.free_space_hud[pname], "text", ""..inotify.free_space[pname].."/"..inv:get_size("main").." "..string.format("%.0f", perc).."%")
-        local color = inotify.colors.white
-        if perc <= 25 then
-            color = inotify.colors.red
-        elseif perc <= 50 and perc > 25 then
-            color = inotify.colors.orange
-        elseif perc <= 75 and perc > 50 then
-            color = inotify.colors.yellow
-        elseif perc <= 95 and perc > 75 then
-            color = inotify.colors.dark_green
-        elseif perc > 95 then
-            color = inotify.colors.green
+        if dirty then
+            player:hud_change(inotify.free_space_hud[pname], "text", ""..inotify.free_space[pname].."/"..inv:get_size("main").." "..string.format("%.0f", perc).."%")
+            local color = inotify.colors.white
+            if perc <= 25 then
+                color = inotify.colors.red
+            elseif perc <= 50 and perc > 25 then
+                color = inotify.colors.orange
+            elseif perc <= 75 and perc > 50 then
+                color = inotify.colors.yellow
+            elseif perc <= 95 and perc > 75 then
+                color = inotify.colors.dark_green
+            elseif perc > 95 then
+                color = inotify.colors.green
+            end
+            player:hud_change(inotify.free_space_hud[pname], "number", color)
         end
-        player:hud_change(inotify.free_space_hud[pname], "number", color)
     end
 end
 
