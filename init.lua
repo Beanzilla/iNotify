@@ -31,22 +31,22 @@ minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         inotify.render_health(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=-20},
+            {x=0.15, y=0.85},
+            {x=0, y=-20},
             {x=0, y=0},
             {x=100, y=100}
         )
         inotify.render_pos(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=0},
+            {x=0.15, y=0.85},
+            {x=0, y=0},
             {x=0, y=0},
             {x=100, y=100}
         )
         inotify.render_inv(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=20},
+            {x=0.15, y=0.85},
+            {x=0, y=20},
             {x=0, y=0},
             {x=100, y=100}
         )
