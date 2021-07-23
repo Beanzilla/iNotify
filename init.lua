@@ -1,6 +1,11 @@
 
 inotify = {}
---inotify.store = minetest.get_mod_storage()
+
+inotify.store = minetest.get_mod_storage()
+
+-- Temp/Perm storage for players
+-- The players "group" or "team" or "party"
+inotify.connected = {} -- Playername, Players seperated by commas (,)
 
 -- Colors, HEX, and RGB
 -- Use https://duckduckgo.com/?t=ffab&q=rgb+to+hex&ia=answer to generate hex colors
@@ -31,25 +36,46 @@ minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         inotify.render_health(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=-20},
+            {x=0.15, y=0.85},
+            {x=0, y=-20},
             {x=0, y=0},
             {x=100, y=100}
         )
         inotify.render_pos(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=0},
+            {x=0.15, y=0.85},
+            {x=0, y=0},
             {x=0, y=0},
             {x=100, y=100}
         )
         inotify.render_inv(
             player,
-            {x=0.5, y=0.90},
-            {x=-500, y=20},
+            {x=0.15, y=0.85},
+            {x=0, y=20},
             {x=0, y=0},
             {x=100, y=100}
         )
+        -- Let's hard code 2 players to see their positions
+        local Test1 = minetest.get_player_by_name("Test1")
+        local Test2 = minetest.get_player_by_name("Test2")
+        if Test1 ~= nil and Test2 ~= nil then
+            inotify.render_pos_other(
+                Test1,
+                Test2,
+                {x=0.15, y=0.5},
+                {x=0, y=0},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+            inotify.render_pos_other(
+                Test2,
+                Test1,
+                {x=0.15, y=0.5},
+                {x=0, y=0},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+        end
     end
 end)
 
