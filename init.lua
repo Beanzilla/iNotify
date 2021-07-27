@@ -2,6 +2,9 @@
 inotify = {}
 --inotify.store = minetest.get_mod_storage()
 
+-- Settings
+inotify.interval_rate = 3
+
 -- Colors, HEX, and RGB
 -- Use https://duckduckgo.com/?t=ffab&q=rgb+to+hex&ia=answer to generate hex colors
 inotify.colors = {
@@ -27,29 +30,34 @@ dofile(modpath.."/pos.lua")
 dofile(modpath.."/free_space.lua")
 dofile(modpath.."/health.lua")
 
+local interval = 0
 minetest.register_globalstep(function(dtime)
-    for _, player in ipairs(minetest.get_connected_players()) do
-        inotify.render_health(
-            player,
-            {x=0.15, y=0.85},
-            {x=0, y=-20},
-            {x=0, y=0},
-            {x=100, y=100}
-        )
-        inotify.render_pos(
-            player,
-            {x=0.15, y=0.85},
-            {x=0, y=0},
-            {x=0, y=0},
-            {x=100, y=100}
-        )
-        inotify.render_inv(
-            player,
-            {x=0.15, y=0.85},
-            {x=0, y=20},
-            {x=0, y=0},
-            {x=100, y=100}
-        )
+    interval = interval + dtime
+    if interval >= inotify.interval_rate then
+        for _, player in ipairs(minetest.get_connected_players()) do
+            inotify.render_health(
+                player,
+                {x=0.15, y=0.85},
+                {x=0, y=-20},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+            inotify.render_pos(
+                player,
+                {x=0.15, y=0.85},
+                {x=0, y=0},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+            inotify.render_inv(
+                player,
+                {x=0.15, y=0.85},
+                {x=0, y=20},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+        end
+        interval = 0
     end
 end)
 

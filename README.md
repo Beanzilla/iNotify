@@ -7,6 +7,8 @@ An in-game notification system.
 
 - Allow players to see their position, health, and other information without F5.
 
+- Now includes a interval in seconds till it updates.
+
 - Allow players to share their information with other players. (todo)
 
 ## Todo
@@ -18,4 +20,4 @@ An in-game notification system.
 ## Links
 
 - [Github (Source)](https://github.com/Beanzilla/iNotify)
-- [ContentDB](#) (todo)
+- [ContentDB](https://content.minetest.net/packages/ApolloX/inotify/)
