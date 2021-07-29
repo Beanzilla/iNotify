@@ -16,7 +16,7 @@ An in-game notification system.
 - [x] Use the HUD to render a players position and other information (Completed: position, inventory space free, health)
 - [ ] Allow players to share that information with other players.
 - [ ] Allow shared information to be persistent. (In other words, you can share your info across server restarts and sessions)
-- [x] Added MineClone support (Mainly MineClone5)
+- [x] Added MineClone support (Mainly MineClone5's multi-dimentions, but it appears MCL2 also is supported)
 
 ## Links
 
