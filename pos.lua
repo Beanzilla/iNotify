@@ -12,7 +12,10 @@ function inotify.render_pos(player, posi, off, align, scaler)
     -- If able, detect if MCL5 is installed, if so use y based on dimention
     if mcl_worlds ~= nil then
         -- Record the dimention too, so we can add color effect.
-        pos.y, dim = mcl_worlds.y_to_layer(pos.y)
+        local y, dim = mcl_worlds.y_to_layer(pos.y)
+        if dim ~= "void" then -- Only update y if dimention not void (nil, "void" is what our y_to_layer returned)
+            pos.y = y
+        end
     end
     pos.x = string.format("%.1f", pos.x)
     pos.y = string.format("%.1f", pos.y)
