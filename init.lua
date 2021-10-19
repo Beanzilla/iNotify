@@ -3,7 +3,7 @@ inotify = {}
 --inotify.store = minetest.get_mod_storage()
 
 -- Settings
-inotify.interval_rate = 0
+inotify.interval_rate = 3
 inotify.include_day_count = true
 
 -- Colors, HEX, and RGB
