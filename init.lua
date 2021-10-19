@@ -3,7 +3,7 @@ inotify = {}
 --inotify.store = minetest.get_mod_storage()
 
 -- Settings
-inotify.interval_rate = 3
+inotify.interval_rate = 0
 inotify.include_day_count = true
 
 -- Colors, HEX, and RGB
@@ -63,6 +63,7 @@ minetest.register_globalstep(function(dtime)
     end
     -- Update time per second
     for _, player in ipairs(minetest.get_connected_players()) do
+        
         inotify.render_worldt(
             player,
             {x=0.15, y=0.85},

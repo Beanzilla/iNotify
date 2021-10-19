@@ -14,8 +14,8 @@ function inotify.render_inv(player, pos, off, align, scaler)
         end
     end
     local space_max = inv:get_size("main")
-    -- = Form free space percent
-    local perc = (empty / space_max) * 100
+    -- = Form free space percent (Change it so instead of tracking empty track used percent)
+    local perc = math.abs(((empty / space_max) * 100) - 100) -- 3% used rather than 3% free
     -- = Check if in the health tracker, check if needing update to HUD
     local dirty = true -- Assume we do need to update
     if inotify.free_space[pname] ~= nil then
@@ -31,15 +31,15 @@ function inotify.render_inv(player, pos, off, align, scaler)
     if inotify.free_space_hud[pname] == nil then
         local color = inotify.colors.white
         if perc <= 25 then
-            color = inotify.colors.red
+            color = inotify.colors.green
         elseif perc <= 50 and perc > 25 then
-            color = inotify.colors.orange
+            color = inotify.colors.dark_green
         elseif perc <= 75 and perc > 50 then
             color = inotify.colors.yellow
         elseif perc <= 95 and perc > 75 then
-            color = inotify.colors.dark_green
+            color = inotify.colors.orange
         elseif perc > 95 then
-            color = inotify.colors.green
+            color = inotify.colors.red
         end
         inotify.free_space_hud[pname] = player:hud_add({
             hud_elem_type = "text",
@@ -55,15 +55,15 @@ function inotify.render_inv(player, pos, off, align, scaler)
             player:hud_change(inotify.free_space_hud[pname], "text", ""..inotify.free_space[pname].."/"..inv:get_size("main").." "..string.format("%.0f", perc).."%")
             local color = inotify.colors.white
             if perc <= 25 then
-                color = inotify.colors.red
+                color = inotify.colors.green
             elseif perc <= 50 and perc > 25 then
-                color = inotify.colors.orange
+                color = inotify.colors.dark_green
             elseif perc <= 75 and perc > 50 then
                 color = inotify.colors.yellow
             elseif perc <= 95 and perc > 75 then
-                color = inotify.colors.dark_green
+                color = inotify.colors.orange
             elseif perc > 95 then
-                color = inotify.colors.green
+                color = inotify.colors.red
             end
             player:hud_change(inotify.free_space_hud[pname], "number", color)
         end

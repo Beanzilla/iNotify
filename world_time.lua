@@ -3,8 +3,8 @@ inotify.worldt_hud = {}
 
 function inotify.get_mi(hour)
     hr = tonumber(hour)
-    if hr >= 0 and hr <= 11 then return 'am' end -- midnight->noon
-    if hr >= 12 and hr <= 23 then return 'pm' end -- noon->midnight
+    if hr >= 0 and hr <= 11 then return 'AM' end -- midnight->noon
+    if hr >= 12 and hr <= 23 then return 'PM' end -- noon->midnight
     minetest.log("warning", "Could not get mi from "..tostring(hour))
 end
 
@@ -28,6 +28,7 @@ function inotify.render_worldt(player, posi, off, align, scaler)
     --minetest.log("action", time_stamp)
 
     if inotify.worldt_hud[pname] == nil then
+        -- Change the color based on the time (I really want it to "follow" the time of day, if it's bright or dark)
         local cl = inotify.colors.green -- Daytime == bright
         if mi == "am" then -- Nighttime == dark
             cl = inotify.colors.dark_green
@@ -43,7 +44,7 @@ function inotify.render_worldt(player, posi, off, align, scaler)
         })
     else
         local cl = inotify.colors.green
-        if mi == "am" then
+        if mi == "AM" then
             cl = inotify.colors.dark_green
         end
         player:hud_change(

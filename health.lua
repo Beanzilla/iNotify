@@ -9,7 +9,7 @@ function inotify.render_health(player, pos, off, align, scaler)
     local hp = player:get_hp()
     local hp_max = player:get_properties().hp_max
     -- = Form HP percent
-    local hp_perc = (hp / hp_max) * 100
+    local hp_perc = ((hp / hp_max) * 100)
     -- = Check if in the health tracker, check if needing update to HUD
     local dirty = true -- Assume we do need to update
     if inotify.health[pname] ~= nil then
@@ -46,7 +46,7 @@ function inotify.render_health(player, pos, off, align, scaler)
         })
     else
         if dirty then
-            player:hud_change(inotify.health_hud[pname], "text", "HP: "..string.format("%.0f", hp_perc).."%")
+            --player:hud_change(inotify.health_hud[pname], "text", "HP: "..string.format("%.0f", hp_perc).."%")
             local color = inotify.colors.white
             if hp_perc <= 25 then
                 color = inotify.colors.red
