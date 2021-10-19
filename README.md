@@ -11,6 +11,8 @@ An in-game notification system.
 
 - Allow players to share their information with other players. (todo)
 
+- Now includes current world time and if requested also includes day count since starting world creation
+
 ## Todo
 
 - [x] Use the HUD to render a players position and other information (Completed: position, inventory space free, health)
