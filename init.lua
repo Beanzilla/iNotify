@@ -88,4 +88,7 @@ minetest.register_on_leaveplayer(function(object, timed_out)
     inotify.free_space[pname] = nil
     object:hud_remove(inotify.free_space_hud[pname])
     inotify.free_space_hud[pname] = nil
+
+    object:hud_remove(inotify.worldt_hud[pname])
+    inotify.worldt_hud[pname] = nil
 end)

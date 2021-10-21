@@ -14,18 +14,19 @@ function inotify.render_inv(player, pos, off, align, scaler)
         end
     end
     local space_max = inv:get_size("main")
+    local used = math.abs( empty - space_max )  -- Obtain the amount being used rather than amount full
     -- = Form free space percent (Change it so instead of tracking empty track used percent)
-    local perc = math.abs(((empty / space_max) * 100) - 100) -- 3% used rather than 3% free
+    local perc = ((used / space_max) * 100)
     -- = Check if in the health tracker, check if needing update to HUD
     local dirty = true -- Assume we do need to update
     if inotify.free_space[pname] ~= nil then
-        if inotify.free_space[pname] == empty then
+        if inotify.free_space[pname] == used then
             dirty = false
         else
-            inotify.free_space[pname] = empty
+            inotify.free_space[pname] = used
         end
     else
-        inotify.free_space[pname] = empty
+        inotify.free_space[pname] = used
     end
     -- = Form HUD stat =
     if inotify.free_space_hud[pname] == nil then

@@ -2,7 +2,7 @@
 inotify.worldt_hud = {}
 
 function inotify.get_mi(hour)
-    hr = tonumber(hour)
+    local hr = tonumber(hour)
     if hr >= 0 and hr <= 11 then return 'AM' end -- midnight->noon
     if hr >= 12 and hr <= 23 then return 'PM' end -- noon->midnight
     minetest.log("warning", "Could not get mi from "..tostring(hour))
