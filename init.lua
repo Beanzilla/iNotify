@@ -3,8 +3,17 @@ inotify = {}
 --inotify.store = minetest.get_mod_storage()
 
 -- Settings
-inotify.interval_rate = 3
-inotify.include_day_count = true
+inotify.interval_rate = minetest.settings:get("inotify.interval_rate")
+inotify.include_day_count = minetest.settings:get_bool("inotify.include_day_count")
+
+if inotify.interval_rate == nil then
+    inotify.interval_rate = 3.0
+    minetest.settings:set("inotify.interval_rate", 3.0)
+end
+if inotify.include_day_count == nil then
+    inotify.include_day_count = false
+    minetest.settings:set_bool("inotify.include_day_count", false)
+end
 
 -- Colors, HEX, and RGB
 -- Use https://duckduckgo.com/?t=ffab&q=rgb+to+hex&ia=answer to generate hex colors
@@ -32,63 +41,102 @@ dofile(modpath.."/free_space.lua")
 dofile(modpath.."/health.lua")
 dofile(modpath.."/world_time.lua")
 
+local do_health = minetest.settings:get_bool("inotify.display_health")
+local do_pos = minetest.settings:get_bool("inotify.display_pos")
+local do_freespace = minetest.settings:get_bool("inotify.display_freespace")
+local do_clock = minetest.settings:get_bool("inotify.display_time")
+
+if do_health == nil then
+    do_health = false
+    minetest.settings:set_bool("inotify.display_health", false)
+end
+if do_pos == nil then
+    do_pos = true
+    minetest.settings:set_bool("inotify.display_pos", true)
+end
+if do_freespace == nil then
+    do_freespace = true
+    minetest.settings:set_bool("inotify.display_freespace", true)
+end
+if do_clock == nil then
+    do_clock = true
+    minetest.settings:set_bool("inotify.display_time", true)
+end
+
 local interval = 0
 minetest.register_globalstep(function(dtime)
     interval = interval + dtime
     if interval >= inotify.interval_rate then
-        for _, player in ipairs(minetest.get_connected_players()) do
-            inotify.render_health(
-                player,
-                {x=0.15, y=0.85},
-                {x=0, y=-20},
-                {x=0, y=0},
-                {x=100, y=100}
-            )
-            inotify.render_pos(
-                player,
-                {x=0.15, y=0.85},
-                {x=0, y=0},
-                {x=0, y=0},
-                {x=100, y=100}
-            )
-            inotify.render_inv(
-                player,
-                {x=0.15, y=0.85},
-                {x=0, y=20},
-                {x=0, y=0},
-                {x=100, y=100}
-            )
+        if do_health or do_freespace or do_pos then
+            for _, player in ipairs(minetest.get_connected_players()) do
+                if do_health then
+                    inotify.render_health(
+                        player,
+                        {x=0.15, y=0.85},
+                        {x=0, y=-20},
+                        {x=0, y=0},
+                        {x=100, y=100}
+                    )
+                end
+                if do_pos then
+                    inotify.render_pos(
+                        player,
+                        {x=0.15, y=0.85},
+                        {x=0, y=0},
+                        {x=0, y=0},
+                        {x=100, y=100}
+                    )
+                end
+                if do_freespace then
+                    inotify.render_inv(
+                        player,
+                        {x=0.15, y=0.85},
+                        {x=0, y=20},
+                        {x=0, y=0},
+                        {x=100, y=100}
+                    )
+                end
+            end
         end
         interval = 0
     end
     -- Update time per second
-    for _, player in ipairs(minetest.get_connected_players()) do
-        
-        inotify.render_worldt(
-            player,
-            {x=0.15, y=0.85},
-            {x=0, y=-40},
-            {x=0, y=0},
-            {x=100, y=100}
-        )
+    if do_clock then
+        for _, player in ipairs(minetest.get_connected_players()) do
+            inotify.render_worldt(
+                player,
+                {x=0.15, y=0.85},
+                {x=0, y=-40},
+                {x=0, y=0},
+                {x=100, y=100}
+            )
+        end
     end
 end)
 
 -- Cleanup some player info
 minetest.register_on_leaveplayer(function(object, timed_out)
     local pname = object:get_player_name()
-    inotify.health[pname] = nil
-    object:hud_remove(inotify.health_hud[pname])
-    inotify.health_hud[pname] = nil
+    if inotify.health[pname] ~= nil then
+        inotify.health[pname] = nil
+        object:hud_remove(inotify.health_hud[pname])
+        inotify.health_hud[pname] = nil
+    end
 
-    inotify.player_pos[pname] = nil
-    object:hud_remove(inotify.player_pos_hud[pname])
-    inotify.player_pos_hud[pname] = nil
+    if inotify.player_pos[pname] ~= nil then
+        inotify.player_pos[pname] = nil
+        object:hud_remove(inotify.player_pos_hud[pname])
+        inotify.player_pos_hud[pname] = nil
+    end
 
-    inotify.free_space[pname] = nil
-    object:hud_remove(inotify.free_space_hud[pname])
-    inotify.free_space_hud[pname] = nil
+    if inotify.free_space[pname] ~= nil then
+        inotify.free_space[pname] = nil
+        object:hud_remove(inotify.free_space_hud[pname])
+        inotify.free_space_hud[pname] = nil
+    end
 
-    object:hud_remove(inotify.worldt_hud[pname])
-    inotify.worldt_hud[pname] = nil
+    if inotify.worldt_hud[pname] ~= nil then
+        object:hud_remove(inotify.worldt_hud[pname])
+        inotify.worldt_hud[pname] = nil
+    end
 end)

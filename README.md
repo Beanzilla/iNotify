@@ -13,6 +13,8 @@ An in-game notification system.
 
 - Now includes current world time and if requested also includes day count since starting world creation
 
+- Uses settings defined in `minetest.conf`. (Just set them there or just run it once then change them, they will be automatically added to the `minetest.conf` file)
+
 ## Todo
 
 - [x] Use the HUD to render a players position and other information (Completed: position, inventory space free, health)

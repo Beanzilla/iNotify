@@ -1,0 +1,18 @@
+
+# How fast to update HUD elements (in seconds)
+inotify.interval_rate (Redraw Rate) float 1.0 0.0 30.0
+
+# Do we include the days since world creation
+inotify.include_day_count (Include Days Since Creation) bool false
+
+# Show players health
+inotify.display_health (Display Player's Health) bool false
+
+# Show players position, will change color based on dimention (if MineClone world)
+inotify.display_pos (Display Player's Position) bool true
+
+# Shows players space used, max space avalible and percent used up
+inotify.display_freespace (Display Player's Freespace) bool true
+
+# Updates as fast as possible, Showing world time and optionally days since creation
+inotify.display_time (Display In-Game World Time) bool true
